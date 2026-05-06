@@ -1,19 +1,21 @@
 import { api } from "../api/api";
+import type { User } from "../context/AuthContext";
 
-export async function login(email: string, password: string): Promise<void> {
+export async function loginRequest(
+  email: string,
+  password: string,
+): Promise<User> {
   const response = await api.post("/auth/login", {
     email,
     password,
   });
   localStorage.setItem("accessToken", response.data.accessToken);
   localStorage.setItem("refreshToken", response.data.refreshToken);
-  console.log("response data: ", response.data);
-  sessionStorage.setItem("user", JSON.stringify(response.data.user));
-  return response.data;
+
+  return response.data.user;
 }
 
-export async function logout() {
-  console.log("Logout started");
+export async function logoutRequest() {
   try {
     await api.post("/auth/logout");
   } catch (e) {
@@ -21,6 +23,5 @@ export async function logout() {
   } finally {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    sessionStorage.removeItem("user");
   }
 }

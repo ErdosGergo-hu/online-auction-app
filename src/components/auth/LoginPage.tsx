@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { login } from "../../api/authApi";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       await login(email, password);
       alert("Login successful");
+      navigate("/auctions");
     } catch (error) {
       alert("Login failed: " + error);
     }
@@ -19,12 +23,10 @@ export default function LoginPage() {
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            className="mx-auto h-10 w-auto"
-          />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-indigo-400">
+          <div className="mx-auto h-15 w-15">
+            <img src="/images/batman.jpg" alt="main logo" />
+          </div>
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-700">
             Sign in to your account
           </h2>
         </div>
@@ -34,7 +36,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm/6 font-medium text-indigo-400"
+                className="block text-sm/6 font-medium text-gray-700"
               >
                 Email address
               </label>
@@ -43,7 +45,7 @@ export default function LoginPage() {
                   type="email"
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md bg-indigo-400 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -54,14 +56,14 @@ export default function LoginPage() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm/6 font-medium text-indigo-400"
+                  className="block text-sm/6 font-medium text-gray-700"
                 >
                   Password
                 </label>
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-semibold text-indigo-400 hover:text-indigo-300"
+                    className="font-semibold text-gray-700 hover:text-gray-500"
                   >
                     Forgot password?
                   </a>
@@ -72,7 +74,7 @@ export default function LoginPage() {
                   type="password"
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md bg-indigo-400 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -82,7 +84,7 @@ export default function LoginPage() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
                 Sign in
               </button>

@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronIcon } from "../icons/ChevronIcon";
 import TickIcon from "../icons/TickIcon";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 const LANGUAGES = [
   { code: "en", label: "English", flag: "uk" },
@@ -23,16 +24,7 @@ export default function LanguageSelector() {
     setOpen(false);
   };
 
-  // Close on outside click
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  useClickOutside(ref, () => setOpen(false));
 
   return (
     <div ref={ref} className="relative inline-block">

@@ -9,20 +9,21 @@ const AVAIBLE_NAV_LINKS = [
 ];
 
 export default function Header() {
-  const linkClass = "text-gray-600 hover:text-black transition";
+  const navClass = ({ isActive }: { isActive: boolean }) => {
+    return `border-b-2 ${isActive ? "border-b-blue-700" : "border-b-transparent"} transition`;
+  };
 
-  const activeClass = "border-b border-blue-500";
   return (
     <header className="h-16 bg-white flex items-center justify-between px-40">
       <div className="w-15">
         <img src="/images/batman.jpg" alt="main logo" />
       </div>
-      <nav className="flex gap-6 rounded-full border border-gray-300 px-6 py-2">
+      <nav className="flex gap-6 rounded-full px-6 py-2">
         {AVAIBLE_NAV_LINKS.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
-            className={({ isActive }) => (isActive ? activeClass : linkClass)}
+            className={({ isActive }) => navClass({ isActive })}
           >
             {link.name}
           </NavLink>

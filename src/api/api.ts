@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -20,7 +19,6 @@ let isRefreshing = false;
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const navigate = useNavigate();
     const originalRequest = error.config;
     console.log("Intercept response error: ", error);
     if (error.response?.status === 401 && !originalRequest._retry) {
@@ -48,7 +46,6 @@ api.interceptors.response.use(
           localStorage.removeItem("refreshToken");
           return Promise.reject(err);
         } finally {
-          navigate("/auctions");
           isRefreshing = false;
         }
       }

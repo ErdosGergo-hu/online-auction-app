@@ -4,6 +4,7 @@ import AuctionsPage from "./pages/AuctionsPage";
 import Header from "./components/Header";
 import AuctionPage from "./pages/AuctionPage";
 import LoginPage from "./components/auth/LoginPage";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Header />
         <main className="p-6 overflow-auto px-40 bg-white">
           <Routes>
+            <Route path="/" element={<Dashboard />} />
             <Route path="/auctions" element={<AuctionsPage />} />
             <Route path="/auction/:id" element={<AuctionPage />} />
             <Route path="/login" element={<LoginPage />} />
