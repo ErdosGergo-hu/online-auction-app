@@ -6,6 +6,9 @@ export type User = {
   email: string;
   createdAt: string;
   avatarUrl: string;
+  finishedAuctions?: number;
+  currentAuctions?: number;
+  earnings?: number;
 };
 
 type AuthContextType = {

@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
 import { getBidsByAuctionId, type Bid } from "../api/bidApi";
 import type { Auction } from "../api/auctionApi";
-
-function formatAmount(amount: number, currency: string) {
-  return `${amount.toLocaleString("hu-HU")} ${currency}`;
-}
-
-function timeAgo(date: Date): string {
-  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (diff < 60) return `${diff}s ago`;
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  return date.toLocaleDateString();
-}
+import { timeAgo } from "../utils/date";
+import { formatAmount } from "../utils/number";
 
 export default function BidHistory({ auction }: { auction: Auction }) {
   const [bids, setBids] = useState<Bid[]>([]);
@@ -24,7 +14,6 @@ export default function BidHistory({ auction }: { auction: Auction }) {
   useEffect(() => {
     getBidsByAuctionId(auction.id)
       .then((bids) => {
-        console.log("Bids: ", bids);
         setBids(bids);
       })
       .catch(console.error);

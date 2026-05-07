@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <div className="h-screen bg-gray-100 text-gray-900">
         <Header />
-        <main className="p-6 overflow-auto px-40 bg-white">
+        <main className="min-h-full p-6 overflow-auto px-40 bg-[#0D0D0D]">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/auctions" element={<AuctionsPage />} />

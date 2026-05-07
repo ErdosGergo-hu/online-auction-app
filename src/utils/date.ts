@@ -10,3 +10,41 @@ export function formatDate(value: string | undefined): string {
     minute: "2-digit",
   });
 }
+
+export function timeAgo(date: Date): string {
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 60) return `${diff}s ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return date.toLocaleDateString();
+}
+
+export function timeLeft(endDate: Date): string {
+  const diff = Math.floor((endDate.getTime() - Date.now()) / 1000);
+
+  if (diff <= 0) {
+    return "Ended";
+  }
+
+  const days = Math.floor(diff / 86400);
+
+  const hours = Math.floor((diff % 86400) / 3600);
+
+  const minutes = Math.floor((diff % 3600) / 60);
+
+  const seconds = diff % 60;
+
+  if (diff < 60) {
+    return `${seconds}s`;
+  }
+
+  if (diff < 3600) {
+    return `${minutes}m ${seconds}s`;
+  }
+
+  if (diff < 86400) {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
