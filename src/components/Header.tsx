@@ -10,7 +10,7 @@ const AVAIBLE_NAV_LINKS = [
 
 export default function Header() {
   const navClass = ({ isActive }: { isActive: boolean }) => {
-    return `border-b-2 text-[#F5F5F5] ${isActive ? "border-b-blue-700" : "border-b-transparent"} transition`;
+    return `border-b-2 text-secondary-font ${isActive ? "border-gold" : "border-b-transparent"} transition`;
   };
 
   return (
@@ -18,10 +18,7 @@ export default function Header() {
       <div className="w-15">
         <img src="/images/barca.png" alt="main logo" />
       </div>
-      <nav
-        className="absolute left-1/2 -translate-x-1/2
-    flex items-center gap-10"
-      >
+      <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-10">
         {AVAIBLE_NAV_LINKS.map((link) => (
           <NavLink
             key={link.path}
@@ -34,12 +31,6 @@ export default function Header() {
       </nav>
 
       <div className="flex items-center gap-4">
-        {/* <input
-          type="text"
-          placeholder="Search..."
-          className="px-4 py-2 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-gray-300"
-        /> */}
-
         <LanguageSelector />
 
         <UserMenu />

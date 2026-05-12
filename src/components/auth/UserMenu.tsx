@@ -35,9 +35,8 @@ export default function UserMenu() {
       <div className="w-10 h-10 rounded-full bg-gray-300">
         <button
           onClick={() => setOpen((o) => !o)}
-          className="w-full h-full rounded-full overflow-hidden border border-[#8A8A8A]"
+          className="w-full h-full rounded-full overflow-hidden border border-[#262626]"
         >
-          {/* <div className="rounded-full overflow-hidden border-3 border-[#8A8A8A]"> */}
           <img
             src={`/images/${user ? user.avatarUrl : "default_profile"}.jpg`}
             alt={user ? user.username : "default_profile"}

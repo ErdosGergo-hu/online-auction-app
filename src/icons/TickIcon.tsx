@@ -1,7 +1,7 @@
 export default function TickIcon() {
   return (
     <svg
-      className="ml-auto w-3.5 h-3.5 text-blue-500"
+      className="ml-auto w-3.5 h-3.5 text-gold"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

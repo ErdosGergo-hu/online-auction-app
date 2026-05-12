@@ -30,7 +30,7 @@ export default function LanguageSelector() {
     <div ref={ref} className="relative inline-block">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="h-10 flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all duration-150 text-sm font-medium text-gray-700 active:scale-95"
+        className="h-10 flex items-center gap-2 px-3 py-2 rounded-lg shadow-sm shadow-[#262626] border border-[#262626] transition-all duration-150 text-sm font-medium text-secondary-font active:scale-95"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
@@ -46,7 +46,7 @@ export default function LanguageSelector() {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 mt-1.5 w-36 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden z-50 animate-in"
+          className="absolute right-0 mt-1.5 w-36 bg-[#262626] border border-[#262626] rounded-xl shadow-lg overflow-hidden z-50 animate-in"
         >
           {LANGUAGES.map((lang) => {
             const isActive = lang.code === i18n.language;
@@ -59,8 +59,8 @@ export default function LanguageSelector() {
                 className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-colors duration-100
                   ${
                     isActive
-                      ? "bg-blue-50 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? "bg-[#2A2A2A] text-gold font-medium"
+                      : "text-secondary-font hover:bg-[#2A2A2A]"
                   }`}
               >
                 <img

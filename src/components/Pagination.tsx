@@ -16,37 +16,39 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
+  const className =
+    "inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium border border-[#262626] text-secondary-font hover:bg-[#2A2A2A] active:scale-95";
   return (
     <div className="flex items-center justify-center gap-4 mt-6">
       <button
         onClick={() => onPageChange(0)}
         disabled={page === 0}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 active:scale-95"
+        className={className}
       >
         <ChevronsLeft />
       </button>
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 0}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 active:scale-95"
+        className={className}
       >
         <ChevronLeft />
       </button>
-      <span>
+      <span className="text-secondary-font">
         {page + 1} of {totalPages}
       </span>
 
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages - 1}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 active:scale-95"
+        className={className}
       >
         <ChevronRight />
       </button>
       <button
         onClick={() => onPageChange(totalPages - 1)}
         disabled={page === totalPages - 1}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 active:scale-95"
+        className={className}
       >
         <ChevronsRight />
       </button>
