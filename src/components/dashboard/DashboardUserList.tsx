@@ -50,7 +50,7 @@ export default function DashboardUserList() {
               {/* Current Auctions */}
               <td className="py-3 text-right">
                 <div className="flex flex-col font-medium">
-                  <span>{user.currentAuctions}</span>
+                  <span>{user.activeListings}</span>
                   <span className="text-[#8A8A8A]">Ongoing</span>
                 </div>
               </td>

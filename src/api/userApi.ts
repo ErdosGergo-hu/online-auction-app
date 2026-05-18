@@ -6,3 +6,8 @@ export async function getDashboardUsers() {
   const response = await api.get(BASE_URL + "/dashboard");
   return response.data;
 }
+
+export async function getUserProfileStat(userId: number) {
+  const response = await api.get(BASE_URL + `/profile/${userId}`);
+  return response.data;
+}

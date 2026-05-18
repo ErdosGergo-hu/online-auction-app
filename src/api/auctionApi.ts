@@ -28,6 +28,7 @@ export type Auction = {
   startingPriceHuf: number;
   currentPriceHuf: number;
   seller: User;
+  isFavorite: boolean;
 };
 
 export type Page<T> = {
@@ -82,9 +83,11 @@ export async function getAuctionById(id: number): Promise<Auction> {
 export async function updateActionByBid(
   auctionId: number,
   newPrice: number,
+  userId: number,
 ): Promise<Auction> {
   const response = await api.put<Auction>(BASE_URL + "/" + auctionId + "/bid", {
     newPrice: newPrice,
+    userId: userId,
   });
 
   return response.data;

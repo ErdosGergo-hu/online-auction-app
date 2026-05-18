@@ -1,5 +1,6 @@
+import type { User } from "../context/AuthContext";
 import { api } from "./api";
-import type { Auction, User } from "./auctionApi";
+import type { Auction } from "./auctionApi";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL + "/bid";
 
 export type Bid = {
@@ -12,5 +13,15 @@ export type Bid = {
 
 export async function getBidsByAuctionId(auctionId: number): Promise<Bid[]> {
   const response = await api.get(BASE_URL + "/auction/" + auctionId);
+  return response.data;
+}
+
+export async function getActiveBidsByUserId(userId: number): Promise<Bid[]> {
+  const response = await api.get(BASE_URL + "/active/" + userId);
+  return response.data;
+}
+
+export async function getWonBidsByUserId(userId: number): Promise<Bid[]> {
+  const response = await api.get(BASE_URL + "/won/" + userId);
   return response.data;
 }

@@ -7,7 +7,7 @@ export type User = {
   createdAt: string;
   avatarUrl: string;
   finishedAuctions?: number;
-  currentAuctions?: number;
+  activeListings?: number;
   earnings?: number;
 };
 

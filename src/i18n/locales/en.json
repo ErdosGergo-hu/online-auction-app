@@ -1,6 +1,6 @@
 {
   "auction": {
-    "view_details": "View details",
+    "viewDetails": "View details",
     "category": {
       "ALL": "",
       "ELECTRONICS": "Electronics",

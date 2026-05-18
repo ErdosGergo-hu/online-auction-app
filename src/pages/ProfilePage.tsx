@@ -1,129 +1,81 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { formatDate } from "../utils/date";
-
-// ── Types ─────────────────────────────────────────────────────────────────────
+import { getUserProfileStat } from "../api/userApi";
+import { formatAmount } from "../utils/number";
+import {
+  getActiveBidsByUserId,
+  getWonBidsByUserId,
+  type Bid,
+} from "../api/bidApi";
 
 type Tab = "bids" | "won" | "favourites";
 
-interface Bid {
-  id: number;
-  title: string;
-  amount: number;
-  endsIn: string;
-  status: "winning" | "outbid" | "won";
-  image?: string;
-}
+type UserProfileStat = {
+  finishedAuctions: number;
+  activeListings: number;
+  earnings: number;
+  spent: number;
+};
 
-// ── Demo data ─────────────────────────────────────────────────────────────────
+const initialUserStat: UserProfileStat = {
+  finishedAuctions: 0,
+  activeListings: 0,
+  earnings: 0,
+  spent: 0,
+};
 
-const BIDS: Bid[] = [
-  {
-    id: 1,
-    title: "iPhone 13",
-    amount: 25010,
-    endsIn: "24h",
-    status: "winning",
-  },
-  {
-    id: 2,
-    title: "Omega Seamaster",
-    amount: 110000,
-    endsIn: "2h",
-    status: "outbid",
-  },
-  {
-    id: 3,
-    title: "Vintage Leica M3",
-    amount: 87500,
-    endsIn: "3d",
-    status: "winning",
-  },
-  {
-    id: 4,
-    title: "Levi's jacket",
-    amount: 12000,
-    endsIn: "5h",
-    status: "outbid",
-  },
-];
+const FAVOURITES: Bid[] = [];
 
-const WON: Bid[] = [
-  { id: 5, title: "AirPods Pro 2", amount: 44000, endsIn: "", status: "won" },
-  { id: 6, title: "Canon AE-1", amount: 31500, endsIn: "", status: "won" },
-  { id: 7, title: "Nike Air Max 90", amount: 18000, endsIn: "", status: "won" },
-];
-
-const FAVOURITES: Bid[] = [
-  {
-    id: 8,
-    title: "MacBook Pro M1",
-    amount: 320000,
-    endsIn: "6d",
-    status: "winning",
-  },
-  {
-    id: 9,
-    title: "Sony WH-1000XM5",
-    amount: 55000,
-    endsIn: "2d",
-    status: "winning",
-  },
-];
-
-// ── Status badge ──────────────────────────────────────────────────────────────
-
-function StatusBadge({ status }: { status: Bid["status"] }) {
-  const map = {
-    winning: "text-emerald-400 bg-emerald-400/10",
-    outbid: "text-red-400    bg-red-400/10",
-    won: "text-gold  bg-gold/10",
-  };
-  const labels = { winning: "Winning", outbid: "Outbid", won: "Won" };
-  return (
-    <span
-      className={`text-[11px] font-medium px-2.5 py-1 rounded-full ${map[status]}`}
-    >
-      {labels[status]}
-    </span>
-  );
-}
+// function StatusBadge({ status }: { status: Bid["status"] }) {
+//   const map = {
+//     winning: "text-emerald-400 bg-emerald-400/10",
+//     outbid: "text-red-400    bg-red-400/10",
+//     won: "text-gold  bg-gold/10",
+//   };
+//   const labels = { winning: "Winning", outbid: "Outbid", won: "Won" };
+//   return (
+//     <span
+//       className={`text-[11px] font-medium px-2.5 py-1 rounded-full ${map[status]}`}
+//     >
+//       {labels[status]}
+//     </span>
+//   );
+// }
 
 // ── Auction row ───────────────────────────────────────────────────────────────
 
 function AuctionRow({ bid }: { bid: Bid }) {
   return (
     <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/6 bg-white/3 hover:bg-white/6 transition-colors">
-      <div className="w-10 h-10 rounded-lg bg-white/6 shrink-0 flex items-center justify-center">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="rgba(255,255,255,0.3)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <path d="M3 9h18M9 21V9" />
-        </svg>
+      <div className="rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
+        <img
+          src={`/images/${bid.auction.item.imageUrl}.jpg`}
+          alt={bid.auction.item.name}
+          className="w-10 h-10 object-contain bg-white"
+        />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-white truncate">{bid.title}</p>
+        <p className="text-sm font-medium text-white truncate">
+          {bid.auction.item.name}
+        </p>
         <p className="text-xs text-white/40">
-          {bid.amount.toLocaleString("hu-HU")} Ft
-          {bid.endsIn && <span className="ml-2">· ends in {bid.endsIn}</span>}
+          {formatAmount(bid.amountHuf, "HUF")} Ft
+          {bid.auction.endDateTime && (
+            <span className="ml-2">
+              · ends in {formatDate(bid.auction.endDateTime)}
+            </span>
+          )}
         </p>
       </div>
-      <StatusBadge status={bid.status} />
+      {/* <StatusBadge status={bid.auction.status} /> */}
     </div>
   );
 }
 
 // ── Stat card ─────────────────────────────────────────────────────────────────
 
-function StatCard({ value, label }: { value: string; label: string }) {
+function StatCard({ value, label }: { value: number | string; label: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-4 border-r border-white/[0.07] last:border-r-0">
       <span className="text-xl font-semibold text-gold tabular-nums">
@@ -138,17 +90,43 @@ function StatCard({ value, label }: { value: string; label: string }) {
 
 export default function ProfilePage() {
   const { user } = useAuth();
+  const [userStat, setUserStat] = useState<UserProfileStat>(initialUserStat);
   const [tab, setTab] = useState<Tab>("bids");
-  console.log("User: ", user);
+  const [activeBids, setActiveBids] = useState<Bid[]>([]);
+  const [wonBids, setWonBids] = useState<Bid[]>([]);
+  const [favourite, setFavourite] = useState<Bid[]>([]);
+
   const tabData: Record<Tab, Bid[]> = {
-    bids: BIDS,
-    won: WON,
+    bids: activeBids,
+    won: wonBids,
     favourites: FAVOURITES,
   };
 
+  useEffect(() => {
+    if (user) {
+      getUserProfileStat(user.id)
+        .then((response) => {
+          setUserStat(response);
+        })
+        .catch(console.error);
+      getActiveBidsByUserId(user.id)
+        .then((response) => {
+          console.log("Bid response: ", response);
+          setActiveBids(response);
+        })
+        .catch(console.error);
+      getWonBidsByUserId(user.id)
+        .then((response) => {
+          console.log("Won bids: ", response);
+          setWonBids(response);
+        })
+        .catch(console.error);
+    }
+  }, [user]);
+
   const tabs: { key: Tab; label: string; count: number }[] = [
-    { key: "bids", label: "Active bids", count: BIDS.length },
-    { key: "won", label: "Won", count: WON.length },
+    { key: "bids", label: "Active bids", count: activeBids.length },
+    { key: "won", label: "Won", count: wonBids.length },
     { key: "favourites", label: "Favourites", count: FAVOURITES.length },
   ];
 
@@ -181,12 +159,20 @@ export default function ProfilePage() {
             </button> */}
           </div>
 
-          {/* ── Stats ────────────────────────────────────────────────────── */}
           <div className="grid grid-cols-4 border-b border-white/[0.07]">
-            <StatCard value="12" label="Active bids" />
-            <StatCard value="5" label="Auctions won" />
-            <StatCard value="342 500 Ft" label="Total spent" />
-            <StatCard value="342 500 Ft" label="Total earned" />
+            <StatCard value={userStat.activeListings} label="Active listings" />
+            <StatCard
+              value={userStat.finishedAuctions}
+              label="Finished auctions"
+            />
+            <StatCard
+              value={formatAmount(userStat.spent, "HUF")}
+              label="Total spent"
+            />
+            <StatCard
+              value={formatAmount(userStat.earnings, "HUF")}
+              label="Total earned"
+            />
           </div>
 
           {/* ── Tabs ─────────────────────────────────────────────────────── */}
@@ -215,7 +201,6 @@ export default function ProfilePage() {
             ))}
           </div>
 
-          {/* ── Content ──────────────────────────────────────────────────── */}
           <div className="p-6 flex flex-col gap-2.5">
             {tabData[tab].map((bid) => (
               <AuctionRow key={bid.id} bid={bid} />
