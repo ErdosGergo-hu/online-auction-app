@@ -32,6 +32,17 @@ export type Auction = {
   isFavorite: boolean;
 };
 
+export type AuctionCreateRequest = {
+  name: string;
+  description: string;
+  imageUrl: string;
+  quantity: number;
+  category: Category;
+  startDateTime: Date;
+  endDateTime: Date;
+  startingPriceHuf: number;
+};
+
 export type Page<T> = {
   totalPages: number;
   content: T[];
@@ -109,5 +120,15 @@ export async function getActiveAuctionByCurrentUser(): Promise<Auction[]> {
 export async function getFavouriteAuctionsByCurrentUser(): Promise<Auction[]> {
   const response = await api.get<Auction[]>(BASE_URL + "/me/favorites");
 
+  return response.data;
+}
+
+export async function createAuction(
+  auctionCreateRequest: AuctionCreateRequest,
+): Promise<Auction> {
+  const response = await api.post<Auction>(
+    BASE_URL + "/create",
+    auctionCreateRequest,
+  );
   return response.data;
 }

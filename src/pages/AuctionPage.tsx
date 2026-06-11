@@ -51,7 +51,6 @@ export default function AuctionPage() {
         setNewBid(a.currentPriceHuf);
       })
       .catch((err) => {
-        console.error(updateErrorMessage, err.response?.data || err);
         setErrorMessage(err.response?.data.message || updateErrorMessage);
         setError(true);
       });

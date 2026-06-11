@@ -5,6 +5,7 @@
     "profile": "My Profile"
   },
   "by": "by",
+  "cancel": "Cancel",
   "countdown": {
     "days": "DAYS",
     "hours": "HRS",
@@ -25,6 +26,7 @@
   "auction": {
     "viewDetails": "View details",
     "category": {
+      "title": "Category",
       "ALL": "",
       "ELECTRONICS": "Electronics",
       "VEHICLE": "Vehicle",
@@ -33,18 +35,26 @@
     "active": "Active auctions",
     "bid": "Bid",
     "bidCount": "Number of Bids",
+    "create": "Create Auction",
+    "createDetails": "List a new item for Bidding",
     "startDateTime": "Start date",
     "endDateTime": "Ends at",
     "startingPriceHuf": "Starts at",
     "currentPriceHuf": "Current Bid",
     "placeBid": "Place Bid",
     "newBid": "New Bid price",
+    "name": "Name",
+    "description": "Description",
+    "quantity": "Quantity",
+    "imageUrl": "Image URL",
     "ended": "Ended",
     "endsIn": "Ends in",
     "countdown": "Time left",
+    "message": "Explore live auctions and place bids on items you love.",
     "error": {
       "fetch": "Error fetching auctions",
-      "update": "Error updating auction"
+      "update": "Error updating auction",
+      "create": "Error creating auction"
     },
     "search": {
       "placeholder": "Search products..."
@@ -63,7 +73,8 @@
     "mostPopularSellers": "Most Popular Seller",
     "deliveries": "Deliveries",
     "ongoing": "Ongoing",
-    "earnings": "Earnings"
+    "earnings": "Earnings",
+    "message": "Discover trending auctions and top-performing sellers."
   },
   "favorite": {
     "error": {
@@ -79,6 +90,8 @@
     "activeListings": "Active listings",
     "finishedAuctions": "Finished auctions",
     "totalSpent": "Total spent",
-    "totalEarnings": "Total earned"
+    "totalEarnings": "Total earned",
+    "message": "Track your auction activity, bids, favorites and achievements.",
+    "createAuction": "Create Auction"
   }
 }

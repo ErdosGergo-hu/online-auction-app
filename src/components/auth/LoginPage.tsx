@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import AuthInputWithLabel from "./AuthInputWithLabel";
+import InputWithLabel from "../InputWithLabel";
 import AuthFormTitle from "./AuthFormTitle";
 
 export default function LoginPage() {
@@ -28,13 +28,13 @@ export default function LoginPage() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleLogin} className="space-y-6">
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Email address"
               type="email"
               inputValue={email}
               onInputChange={setEmail}
             />
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Password"
               type="password"
               inputValue={password}

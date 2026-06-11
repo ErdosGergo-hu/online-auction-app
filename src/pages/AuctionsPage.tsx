@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination";
 import AuctionList from "../components/auction/AuctionList";
 import SearchIcon from "../icons/SearchIcon";
 import { useTranslation } from "react-i18next";
+import PageTitle from "../components/PageTitle";
 
 export default function AuctionsPage() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
@@ -45,7 +46,8 @@ export default function AuctionsPage() {
 
   return (
     <>
-      <div className="bg-[#202020] rounded-xl p-4 mb-5 mx-4">
+      <PageTitle title={t("header.auctions")} message={t("auction.message")} />
+      <div className="bg-[#202020] rounded-xl p-4 my-5 mx-4">
         <div className="flex flex-wrap gap-2 items-center">
           <div className="relative flex-1 min-w-45">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">

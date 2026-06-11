@@ -12,6 +12,9 @@ import {
 import type { User } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
+import PageTitle from "../components/PageTitle";
+import { Plus, SquarePen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type Tab = "active" | "won" | "favourites";
 
@@ -112,6 +115,7 @@ function StatCard({ value, label }: { value: number | string; label: string }) {
 export default function ProfilePage() {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [userStat, setUserStat] = useState<UserProfileStat>(initialUserStat);
   const [tab, setTab] = useState<Tab>("active");
   const [activeAuctions, setActiveAuctions] = useState<Auction[]>([]);
@@ -169,88 +173,103 @@ export default function ProfilePage() {
   return (
     <>
       {user && (
-        <div className="min-h-screen bg-container-background p-6 font-sans rounded-2xl border border-white/[0.07] overflow-hidden mx-auto">
-          {/* ── Header ───────────────────────────────────────────────────── */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.07]">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-amber-500 flex items-center justify-center text-lg font-semibold text-amber-950 shrink-0">
-                {user.username.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base font-semibold text-white">
-                    {user.username}
-                  </span>
-                  <span className="text-[11px] font-medium text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">
-                    {t("user.verified")}
-                  </span>
+        <>
+          <PageTitle title={t("header.profile")} message={t("user.message")} />
+          <div className="min-h-screen bg-container-background p-6 mt-6 font-sans rounded-2xl border border-white/[0.07] overflow-hidden mx-auto">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.07]">
+              <div className="flex items-center gap-4">
+                <div className="rounded-xl overflow-hidden flex items-center justify-center border-2 border-gold">
+                  <img
+                    src={`/images/${user.avatarUrl}.jpg`}
+                    alt={user.username}
+                    className="w-16 h-16 object-cover"
+                  />
                 </div>
-                <p className="text-xs text-white/40 mt-0.5">
-                  {user.email} · {t("user.joined")} {formatDate(user.createdAt)}
-                </p>
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-base font-semibold text-white">
+                      {user.username}
+                    </span>
+                    <span className="text-[11px] font-medium text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">
+                      {t("user.verified")}
+                    </span>
+                    {/* TODO: add edit profile button */}
+                    <button onClick={() => navigate("/profile/edit")}>
+                      <SquarePen size={16} className="text-gold" />
+                    </button>
+                  </div>
+                  <p className="text-xs text-white/40 mt-0.5">
+                    {user.email} · {t("user.joined")}{" "}
+                    {formatDate(user.createdAt)}
+                  </p>
+                </div>
               </div>
-            </div>
-            {/* <button className="px-4 py-2 text-sm font-medium text-white/60 bg-white/6 hover:bg-white/10 border border-white/8 rounded-xl transition-colors">
-              Edit profile
-            </button> */}
-          </div>
-
-          <div className="grid grid-cols-4 border-b border-white/[0.07]">
-            <StatCard
-              value={userStat.activeListings}
-              label={t("user.activeListings")}
-            />
-            <StatCard
-              value={userStat.finishedAuctions}
-              label={t("user.finishedAuctions")}
-            />
-            <StatCard
-              value={formatAmount(userStat.spent, "HUF")}
-              label={t("user.totalSpent")}
-            />
-            <StatCard
-              value={formatAmount(userStat.earnings, "HUF")}
-              label={t("user.totalEarnings")}
-            />
-          </div>
-
-          <div className="flex gap-1 px-6 pt-5 pb-0 border-b border-white/[0.07]">
-            {tabs.map(({ key, label, count }) => (
               <button
-                key={key}
-                onClick={() => setTab(key)}
-                className={`flex items-center gap-1.5 px-1 pb-3.5 text-sm font-medium border-b-2 transition-colors ${
-                  tab === key
-                    ? "text-gold border-gold"
-                    : "text-white/35 border-transparent hover:text-white/60"
-                }`}
+                onClick={() => navigate("/auctions/create")}
+                className="px-3 py-2 gap-1 flex items-center text-[15px] font-medium text-[#262626] bg-gold hover:bg-gold-hover border-[#262626] rounded-xl transition-colors"
               >
-                {label}
-                <span
-                  className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                <Plus size={16} />
+                {t("user.createAuction")}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-4 border-b border-white/[0.07]">
+              <StatCard
+                value={userStat.activeListings}
+                label={t("user.activeListings")}
+              />
+              <StatCard
+                value={userStat.finishedAuctions}
+                label={t("user.finishedAuctions")}
+              />
+              <StatCard
+                value={formatAmount(userStat.spent, "HUF")}
+                label={t("user.totalSpent")}
+              />
+              <StatCard
+                value={formatAmount(userStat.earnings, "HUF")}
+                label={t("user.totalEarnings")}
+              />
+            </div>
+
+            <div className="flex gap-1 px-6 pt-5 pb-0 border-b border-white/[0.07]">
+              {tabs.map(({ key, label, count }) => (
+                <button
+                  key={key}
+                  onClick={() => setTab(key)}
+                  className={`flex items-center gap-1.5 px-1 pb-3.5 text-sm font-medium border-b-2 transition-colors ${
                     tab === key
-                      ? "bg-amber-400/15 text-gold"
-                      : "bg-white/6 text-white/30"
+                      ? "text-gold border-gold"
+                      : "text-white/35 border-transparent hover:text-white/60"
                   }`}
                 >
-                  {count}
-                </span>
-              </button>
-            ))}
-          </div>
+                  {label}
+                  <span
+                    className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                      tab === key
+                        ? "bg-amber-400/15 text-gold"
+                        : "bg-white/6 text-white/30"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              ))}
+            </div>
 
-          <div className="p-6 flex flex-col gap-2.5">
-            {tabData[tab].map((auction) => (
-              <AuctionRow
-                key={auction.id}
-                auction={auction}
-                tab={tab}
-                user={user}
-                t={t}
-              />
-            ))}
+            <div className="p-6 flex flex-col gap-2.5">
+              {tabData[tab].map((auction) => (
+                <AuctionRow
+                  key={auction.id}
+                  auction={auction}
+                  tab={tab}
+                  user={user}
+                  t={t}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

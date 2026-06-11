@@ -5,6 +5,7 @@
     "profile": "Profilom"
   },
   "by": "Készítette",
+  "cancel": "Mégse",
   "countdown": {
     "days": "NAP",
     "hours": "ÓRA",
@@ -25,6 +26,7 @@
   "auction": {
     "viewDetails": "Részletek megtekintése",
     "category": {
+      "title": "Kategória",
       "ALL": "",
       "ELECTRONICS": "Elektronika",
       "VEHICLE": "Jármű",
@@ -33,18 +35,26 @@
     "active": "Aktív aukciók",
     "bid": "Licit",
     "bidCount": "Licitek száma",
+    "create": "Aukció létrehozása",
+    "createDetails": "Hirdess meg egy új tárgyat licitre",
     "startDateTime": "Licit kezdet",
     "endDateTime": "Licit vége",
     "startingPriceHuf": "Kezdő licit ár",
     "currentPriceHuf": "Jelenlegi licit ár",
     "placeBid": "Licitálás",
     "newBid": "Új Licit ára",
+    "name": "Név",
+    "description": "Leírás",
+    "quantity": "Mennyiség",
+    "imageUrl": "Kép URL",
     "ended": "Lejárt",
     "endsIn": "Hátralévő idő",
     "countdown": "Hátralévő idő",
+    "message": "Fedezd fel az élő aukciókat és tedd le a liciteidet a kedvenc termékeidre.",
     "error": {
       "fetch": "Hiba az aukciók lekérésekor",
-      "update": "Hiba az aukció frissítésekor"
+      "update": "Hiba az aukció frissítésekor",
+      "create": "Hiba az aukció létrehozásakor"
     },
     "search": {
       "placeholder": "Keresés termékek közt..."
@@ -63,7 +73,8 @@
     "mostPopularSellers": "Legnépszerűbb eladó",
     "deliveries": "Szállítások",
     "ongoing": "Folyamatban",
-    "earnings": "Bevétel"
+    "earnings": "Bevétel",
+    "message": "Fedezd fel a trendi aukciókat és a legjobb eladókat."
   },
   "favorite": {
     "error": {
@@ -79,6 +90,8 @@
     "won": "Megnyert aukciók",
     "favorites": "Kedvencek",
     "totalSpent": "Összesen költött",
-    "totalEarnings": "Összesen keresett"
+    "totalEarnings": "Összesen keresett",
+    "message": "Kövesd nyomon aukciós tevékenységed, liciteidet, kedvenceidet és eredményeidet.",
+    "createAuction": "Aukció létrehozása"
   }
 }

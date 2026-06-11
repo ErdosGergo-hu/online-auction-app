@@ -1,4 +1,4 @@
-export default function AuthInputWithLabel({
+export default function InputWithLabel({
   label,
   type,
   inputValue,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import AuthInputWithLabel from "./AuthInputWithLabel";
+import InputWithLabel from "../InputWithLabel";
 import AuthFormTitle from "./AuthFormTitle";
 import DialogModal from "../DialogModal";
 
@@ -38,25 +38,25 @@ export default function RegisterPage() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleRegistry} className="space-y-6">
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Username"
               type="text"
               inputValue={userName}
               onInputChange={setUserName}
             />
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Email address"
               type="email"
               inputValue={email}
               onInputChange={setEmail}
             />
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Password"
               type="password"
               inputValue={password}
               onInputChange={setPassword}
             />
-            <AuthInputWithLabel
+            <InputWithLabel
               label="Confirm Password"
               type="password"
               inputValue={confirmPassword}
